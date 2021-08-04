@@ -1,4 +1,6 @@
 using CarRental.API.Data;
+using CarRental.API.Repository;
+using CarRental.API.Repository.IRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +35,8 @@ namespace CarRental.API
             
             services.AddDbContext<CarRentalDbContext>
                (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddSwaggerGen(c =>
             {
