@@ -30,7 +30,7 @@ namespace CarRental.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddScoped<IBookingRepository, BookingRepository>(); // only one instance of bookingrepo will be created for a given httprequest;
             services.AddControllers();
             
             services.AddDbContext<CarRentalDbContext>
