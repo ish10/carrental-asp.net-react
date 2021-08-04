@@ -11,6 +11,10 @@ namespace CarRental.API.Model
         [Key]
         public int UserId { get; set; }
 
+        [Required(ErrorMessage = "Password is required")]
+        public byte[] PasswordHash { get; set; }
+       
+
         [Required (ErrorMessage ="First name is required")]
         public string FirstName { get; set; }
         
