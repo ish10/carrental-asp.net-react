@@ -13,9 +13,15 @@ namespace CarRental.API.Model
         public int TripId { get; set; }
 
         [Required(ErrorMessage ="Enter valid start start")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Start Date(dd/MM/yyyy)")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyyy}")]
         public DateTime StartDate { get; set; }
         
         [Required(ErrorMessage ="Enter valid End start")]
+        [DataType(DataType.Date)]
+        [Display(Name = "End Date(dd/MM/yyyy)")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyyy}")]
         public DateTime EndDate { get; set; }
 
       
