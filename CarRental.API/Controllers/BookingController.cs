@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CarRental.API.Repository;
 using CarRental.API.Model;
+using CarRental.API.Repository.IRepository;
 
 namespace CarRental.API.Controllers
 {
@@ -19,10 +20,25 @@ namespace CarRental.API.Controllers
         {
             this._bookingRepository = bookingRepository;
         }
+
         [Route("BookingReservation")]
         [HttpGet]
         public async Task<ActionResult<string>> getAsync(ProvinceNames city, DateTime startDate, DateTime endDate, CarModel model) {
-            
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            } else if(startDate < DateTime.Today)
+            {
+                return BadRequest("Start Date can't be in the past");
+            }
+            else if (endDate < DateTime.Today)
+            {
+                return BadRequest("End Date can't be in the past");
+            }
+            else if (startDate > endDate)
+            {
+                return BadRequest("Start Date can't come after the End Date");
+            }
+
             return await _bookingRepository.GetData(city, startDate, endDate, model);
         }
     }
