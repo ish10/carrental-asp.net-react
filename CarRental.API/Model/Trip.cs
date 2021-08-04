@@ -14,14 +14,12 @@ namespace CarRental.API.Model
 
         [Required(ErrorMessage ="Enter valid start start")]
         [DataType(DataType.Date)]
-        [Display(Name = "Start Date(dd/MM/yyyy)")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyyy}")]
+        [Display(Name = "Start Date(MM/dd/yyyy)")]
         public DateTime StartDate { get; set; }
         
         [Required(ErrorMessage ="Enter valid End start")]
         [DataType(DataType.Date)]
-        [Display(Name = "End Date(dd/MM/yyyy)")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyyy}")]
+        [Display(Name = "End Date(MM/dd/yyyy)")]
         public DateTime EndDate { get; set; }
 
       
