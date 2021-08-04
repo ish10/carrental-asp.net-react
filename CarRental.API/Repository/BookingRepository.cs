@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CarRental.API.Data;
 using CarRental.API.Model;
+using CarRental.API.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarRental.API.Repository
