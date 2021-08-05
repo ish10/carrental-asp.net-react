@@ -6,7 +6,7 @@ return async(dispatch, getState)=>{
     
     {...FormValues}
     );
-    console.log(response.data);
+    
     dispatch({type: 'SIGN_IN', payload: response.data });
 }
 

@@ -15,7 +15,7 @@ const onFormSubmit=(event)=>{
   
 event.preventDefault();
 
-console.log(FormValues);
+
 props.register(FormValues);
 }
 

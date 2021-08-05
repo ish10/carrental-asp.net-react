@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { Router,Route,Switch } from 'react-router-dom';
-import FormDisplay from './FormDisplay';
+
 import Header from './Header';
 import history from '../history';
+import RegisterForm from './RegisterForm';
 const App=()=>{
 
     return(
@@ -15,7 +16,7 @@ const App=()=>{
          <Header/>
            <Switch>
           
-           <Route path="/" exact component={FormDisplay} />
+           <Route path="/" exact component={RegisterForm} />
           
            </Switch>
          </div>
