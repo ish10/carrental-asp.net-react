@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CarRental.API.Repository.IRepository
 {
-    public interface ICarRepository:IRepositoryAsync<Car>
+    public interface ILocationRepository : IRepositoryAsync<Location>
     {
-        void Update(Car car);
+        void Update(Location location);
     }
 }

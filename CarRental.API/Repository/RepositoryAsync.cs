@@ -72,6 +72,16 @@ namespace CarRental.API.Repository
 
         }
 
+        public async Task<bool> DoesRecordExist(int id)
+        {
+            T entity = await dbset.FindAsync(id);
+            if (entity == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public async Task RemoveAsync(int id)
         {
             T entity = await dbset.FindAsync(id);
@@ -86,6 +96,11 @@ namespace CarRental.API.Repository
         public async Task RemoveRangeAsync(IEnumerable<T> entity)
         {
             dbset.RemoveRange(entity);
+        }
+
+        public async Task Save()
+        {
+            await _db.SaveChangesAsync();
         }
     }
 }

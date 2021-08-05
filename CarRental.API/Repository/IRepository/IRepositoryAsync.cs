@@ -28,5 +28,9 @@ namespace CarRental.API.Repository.IRepository
         Task RemoveAsync(T entity);
 
         Task RemoveRangeAsync(IEnumerable<T> entity);
+
+        Task Save();
+
+        Task<bool> DoesRecordExist(int id);
     }
 }
