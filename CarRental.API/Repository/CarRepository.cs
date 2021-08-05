@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarRental.API.Repository
 {
-    public class CarRepository:Repository<Car>,ICarRepository
+    public class CarRepository:RepositoryAsync<Car>,ICarRepository
     {
         private readonly CarRentalDbContext _db;
         public CarRepository(CarRentalDbContext db):base(db)
@@ -31,8 +31,6 @@ namespace CarRental.API.Repository
 
                 _db.SaveChanges();
             }
-
-            throw new NotImplementedException();
         }
     }
 }

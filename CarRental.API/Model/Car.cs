@@ -30,6 +30,7 @@ namespace CarRental.API.Model
         public CarModel Model { get; set; }
 
         [Required]
+        [Range(1, Int32.MaxValue, ErrorMessage = "Price must be greater than zero")]
         public Double PricePerDay { get; set; }
 
         public string Image { get; set; }   // store the image path 

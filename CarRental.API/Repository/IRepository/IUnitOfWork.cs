@@ -8,6 +8,7 @@ namespace CarRental.API.Repository.IRepository
     public interface IUnitOfWork:IDisposable
     {
         ICarRepository Car { get; }
+        ILocationRepository Location { get; }
         ISP_Call SP_Call { get; }
     }
 }
