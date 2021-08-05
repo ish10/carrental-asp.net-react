@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CarRental.API.Repository;
 using CarRental.API.Model;
 using CarRental.API.Repository.IRepository;
+using NSwag.Annotations;
 
 namespace CarRental.API.Controllers
 {
@@ -23,7 +24,8 @@ namespace CarRental.API.Controllers
 
         [Route("BookingReservation")]
         [HttpGet]
-        public async Task<ActionResult<string>> getAsync(ProvinceNames city, DateTime startDate, DateTime endDate, CarModel model) {
+
+        public async Task<ActionResult> getAsync(ProvinceNames city, DateTime startDate, DateTime endDate, CarModel model) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             } else if(startDate < DateTime.Today)
@@ -39,7 +41,7 @@ namespace CarRental.API.Controllers
                 return BadRequest("Start Date can't come after the End Date");
             }
 
-            return await _bookingRepository.GetData(city, startDate, endDate, model);
+            return Ok(await _bookingRepository.GetData(city, startDate, endDate, model));
         }
     }
 }
