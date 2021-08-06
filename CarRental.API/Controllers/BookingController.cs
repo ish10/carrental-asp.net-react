@@ -8,6 +8,7 @@ using CarRental.API.Repository;
 using CarRental.API.Model;
 using CarRental.API.Repository.IRepository;
 using NSwag.Annotations;
+using CarRental.API.UtilitiesObjects;
 
 namespace CarRental.API.Controllers
 {
@@ -25,10 +26,32 @@ namespace CarRental.API.Controllers
         [Route("BookingReservation")]
         [HttpGet]
 
-        public async Task<ActionResult> getAsync(ProvinceNames city, DateTime startDate, DateTime endDate, CarModel model) {
-            if (!ModelState.IsValid) {
+        public  ActionResult getFormData(string city, DateTime startDate, DateTime endDate, CarModel model) {
+
+            var _Action = CheckData(startDate, endDate, city);
+
+            if (_Action.GetType() == typeof(OkResult))
+            {
+                FormData bookingFormData = new FormData(city.ToLower(), startDate, endDate, model);
+                return Ok(_bookingRepository.GetData(bookingFormData));
+            }
+            return _Action;
+        }
+        private ActionResult CheckData(DateTime startDate, DateTime endDate, string city)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
-            } else if(startDate < DateTime.Today)
+            }
+            else if (city == null || city.Trim().Length == 0)
+            {
+                return BadRequest("City is required");
+            }
+            else if (startDate.ToString().Length == 0 || endDate.ToString().Length == 0)
+            {
+                return BadRequest("Date is required");
+            }
+            else if (startDate < DateTime.Today)
             {
                 return BadRequest("Start Date can't be in the past");
             }
@@ -40,8 +63,9 @@ namespace CarRental.API.Controllers
             {
                 return BadRequest("Start Date can't come after the End Date");
             }
-
-            return Ok(await _bookingRepository.GetData(city, startDate, endDate, model));
+            return Ok();
         }
+
+
     }
 }
