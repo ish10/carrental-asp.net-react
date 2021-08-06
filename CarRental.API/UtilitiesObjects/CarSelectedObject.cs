@@ -15,8 +15,10 @@ namespace CarRental.API.UtilitiesObjects
 
         public string Image { get; private set; }
         public string NumberPlate { get; private set; }
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
 
-        public CarSelectedObject(int carID, CarModel model, string modelValue, Double price , string Image, string plate)
+        public CarSelectedObject(int carID, CarModel model, string modelValue, Double price , string Image, string plate, DateTime startDate, DateTime endDate)
         {
             this.CarId = carID;
             this.Model = model;
@@ -24,6 +26,8 @@ namespace CarRental.API.UtilitiesObjects
             this.PricePerDay = price;
             this.Image = Image;
             this.NumberPlate = plate;
+            this.StartDate = startDate;
+            this.EndDate = endDate;
                 
         }
     }

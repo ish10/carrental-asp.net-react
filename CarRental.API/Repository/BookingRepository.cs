@@ -42,7 +42,7 @@ namespace CarRental.API.Repository
            
             foreach (var c in cars)
             {
-                _result.Add(new CarSelectedObject(c.carId, c.model, Enum.GetName(typeof(CarModel), c.model), c.pricaPerDay, c.image, c.image));
+                _result.Add(new CarSelectedObject(c.carId, c.model, Enum.GetName(typeof(CarModel), c.model), c.pricaPerDay, c.image, c.plate, startDate, endDate));
             }
 
 
