@@ -33,7 +33,9 @@ namespace CarRental.API.Controllers
             if (_Action.GetType() == typeof(OkResult))
             {
                 FormData bookingFormData = new FormData(city.ToLower(), startDate, endDate, model);
-                return Ok(_bookingRepository.GetData(bookingFormData));
+                List<CarSelectedObject> carSelected = _bookingRepository.GetData(bookingFormData);
+                if (carSelected.Count == 0) return NoContent();
+                return Ok(carSelected);
             }
             return _Action;
         }
