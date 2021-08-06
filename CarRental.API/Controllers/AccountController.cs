@@ -32,7 +32,7 @@ namespace CarRental.API.Controllers
             var Appuser = new User
             {
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.PasswordHash)),
-
+                PasswordSalt = hmac.Key,
                 FirstName = registerDTO.FirstName.ToLower(),
                 LastName = registerDTO.LastName.ToLower(),
                Email = registerDTO.Email,
@@ -51,10 +51,15 @@ namespace CarRental.API.Controllers
             var user = await datacontext.Users.SingleOrDefaultAsync(x => x.Email == loginDTO.Email);
             if (user == null) return Unauthorized("Invalid username");
             using var hmac = new HMACSHA512(user.PasswordSalt);
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.PasswordHash));
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
+            }
 
             return new UserDTO
             {
-               // Username = registerDTO.FirstName + registerDTO.LastName,
+                Username = user.FirstName + user.LastName,
                 Token = "JBCJBVJKBVJABVJLADVBJLBVLAJKBVLKABKLABVBLKAKLVAKVL"
             };
         }

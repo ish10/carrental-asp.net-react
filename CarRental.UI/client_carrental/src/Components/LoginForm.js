@@ -1,6 +1,10 @@
 import React,{useState} from 'react';
 import {Link} from 'react-router-dom';
-const LoginForm=()=>{
+import {connect} from 'react-redux';
+import { logIn } from '../Actions';
+
+
+const LoginForm=(props)=>{
 const[LoginDetails,SetLoginDetails]=useState({Email:"",
 PasswordHash :"",
 })
@@ -8,6 +12,7 @@ PasswordHash :"",
 const onFormSubmit=(event)=>{
     event.preventDefault();
     console.log(LoginDetails);
+  props.logIn(LoginDetails);
 
 };
 return(<div>
@@ -45,4 +50,4 @@ return(<div>
    </div>);
 
 };
-export default LoginForm;
+export default connect(null,{logIn}) (LoginForm);
