@@ -37,7 +37,6 @@ namespace CarRental.API
                (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddSwaggerGen(c =>
             {

@@ -7,7 +7,6 @@ const UserProfile = (props) => {
     const [lName, setLName] = useState("");
     const [phoneNo, setPhone] = useState("");
     const [emailAdd, setEmail] = useState("");
-    
 
     const dispatch = useDispatch();
     const updateHandler = (event) => {

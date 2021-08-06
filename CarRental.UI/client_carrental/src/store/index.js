@@ -1,14 +1,10 @@
-﻿const Initial_State = {
-    firstName: null,
-    lastName: null,
-    phone: null,
-    email: null,
-}
+﻿store index.js
 
-export default (state = Initial_State, action) => {
+import { createStore } from "redux";
+
+const updateReducer = (state, action) => {
     if (action.type === "update") {
         return {
-            ...state,
             firstName: action.firstName,
             lastName: action.lastName,
             phone: action.phone,
@@ -17,3 +13,7 @@ export default (state = Initial_State, action) => {
     }
     return state;
 };
+
+const store = createStore(updateReducer);
+
+export default store;
