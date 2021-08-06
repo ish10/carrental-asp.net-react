@@ -38,7 +38,7 @@ namespace CarRental.API.Model
         public  string NumberPlate { get; set; }
 
 
-        public bool IsRented =  false ;
+        public bool IsRented { get; set; }
 
         [Display(Name ="Location")]
         public virtual int LocationId { get; set; }

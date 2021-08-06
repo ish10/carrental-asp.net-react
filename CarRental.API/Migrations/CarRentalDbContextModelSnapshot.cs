@@ -46,6 +46,10 @@ namespace CarRental.API.Migrations
 
                     b.HasIndex("LocationId");
 
+                    b.Property<bool>("IsRented")
+                     .IsRequired()
+                     .HasColumnType("bit");
+
                     b.ToTable("Cars");
                 });
 

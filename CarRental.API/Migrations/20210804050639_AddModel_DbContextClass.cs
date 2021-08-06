@@ -46,6 +46,7 @@ namespace CarRental.API.Migrations
                     Model = table.Column<int>(type: "int", nullable: false),
                     PricePerDay = table.Column<double>(type: "float", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsRented = table.Column<bool>(type: "bit", nullable: false),
                     NumberPlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false)
                 },
