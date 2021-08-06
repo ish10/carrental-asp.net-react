@@ -13,7 +13,8 @@ namespace CarRental.API.Model
 
         [Required(ErrorMessage = "Password is required")]
         public byte[] PasswordHash { get; set; }
-       
+        public byte[] PasswordSalt { get; set; }
+
 
         [Required (ErrorMessage ="First name is required")]
         public string FirstName { get; set; }

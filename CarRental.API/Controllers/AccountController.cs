@@ -3,6 +3,7 @@ using CarRental.API.Dtos;
 using CarRental.API.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace CarRental.API.Controllers
             this.datacontext = datacontext;
 
         }
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<ActionResult<UserDTO>> register(RegisterDTO registerDTO) {
 
             using var hmac = new HMACSHA512();
@@ -43,6 +44,18 @@ namespace CarRental.API.Controllers
             return new UserDTO { 
             Username = registerDTO.FirstName + registerDTO.LastName,
             Token = "JBCJBVJKBVJABVJLADVBJLBVLAJKBVLKABKLABVBLKAKLVAKVL"
+            };
+        }
+        [HttpPost("Login")]
+        public async Task<ActionResult<UserDTO>> login(LoginDTO loginDTO) {
+            var user = await datacontext.Users.SingleOrDefaultAsync(x => x.Email == loginDTO.Email);
+            if (user == null) return Unauthorized("Invalid username");
+            using var hmac = new HMACSHA512(user.PasswordSalt);
+
+            return new UserDTO
+            {
+               // Username = registerDTO.FirstName + registerDTO.LastName,
+                Token = "JBCJBVJKBVJABVJLADVBJLBVLAJKBVLKABKLABVBLKAKLVAKVL"
             };
         }
     }

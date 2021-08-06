@@ -29,6 +29,9 @@ namespace CarRental.API.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsRented")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
@@ -45,10 +48,6 @@ namespace CarRental.API.Migrations
                     b.HasKey("CarId");
 
                     b.HasIndex("LocationId");
-
-                    b.Property<bool>("IsRented")
-                     .IsRequired()
-                     .HasColumnType("bit");
 
                     b.ToTable("Cars");
                 });
@@ -123,6 +122,9 @@ namespace CarRental.API.Migrations
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("PhoneNumber")
