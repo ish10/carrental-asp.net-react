@@ -1,4 +1,6 @@
 import React from 'react';
+import History from '../history';
+import {Link} from 'react-router-dom'
 
 
 
@@ -6,7 +8,12 @@ const Header=()=>{
 
     return(
 
-        <div>header</div>
+        <div>
+<Link to='/'>Home</Link>
+<Link to='/'>Logout</Link>
+<Link to={`/feedback/${1}`}>Fedback</Link>
+
+        </div>
     );
 }
 
