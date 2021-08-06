@@ -1,4 +1,5 @@
 ﻿using CarRental.API.Model;
+using CarRental.API.UtilitiesObjects;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace CarRental.API.Repository.IRepository
 {
     public interface IBookingRepository
     {
-        Task<ActionResult<string>> GetData(ProvinceNames city, DateTime startDate, DateTime endDate, CarModel model);
+        List<CarSelectedObject> GetData(FormData formData);
 
     }
 }
