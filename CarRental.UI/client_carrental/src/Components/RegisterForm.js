@@ -21,6 +21,7 @@ props.register(FormValues);
 
 return(
 <div>
+  <h1>Register</h1>
     <form onSubmit={(event)=>onFormSubmit(event)}>
 
     <label>PasswordHash</label>
