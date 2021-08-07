@@ -30,6 +30,11 @@ export const logIn = (LoginDetails) => {
         
     };
 };
+
+export const signOut=()=>{
+
+    return{type:'SIGN_OUT'};
+};
 export const register = (FormValues) => {
     return async (dispatch, getState) => {
         const response = await Streams.post(
