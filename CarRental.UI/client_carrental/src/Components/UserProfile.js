@@ -1,91 +1,103 @@
-﻿import React from "react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+﻿import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { userUpdate, userGet } from "../Actions";
+import Streams from "../api/Streams";
 
-const UserProfile = (props) => {
-    const [fName, setFName] = useState("");
-    const [lName, setLName] = useState("");
-    const [phoneNo, setPhone] = useState("");
-    const [emailAdd, setEmail] = useState("");
-    
+const UserDisplay = (props) => {
+    const [userValues, setUserValues] = useState({
+        UserId: null,
+        PasswordHash: "",
+        FirstName: "",
+        LastName: "",
+        Email: "",
+        PhoneNumber: "",
+    });
 
-    const dispatch = useDispatch();
-    const updateHandler = (event) => {
-        event.preventDefault();
-        dispatch({
-            type: "update",
-            firstName: { fName },
-            lastName: { lName },
-            phone: { phoneNo },
-            email: { emailAdd },
+    const onFormSubmit = (event) => {
+        props.userUpdate(userValues.UserId, userValues);
+    };
+
+    const onFormLoad = async (id) => {
+        await Streams.get(`/api/User/${id}`).then((response) => {
+            console.log(response.data);
+            setUserValues({
+                ...userValues,
+                UserId: response.data.userId,
+                PasswordHash: response.data.passwordHash,
+                FirstName: response.data.firstName,
+                LastName: response.data.lastName,
+                PhoneNumber: response.data.phoneNumber,
+                Email: response.data.email,
+            });
         });
     };
 
-    const fNameHandler = (event) => {
-        setFName(event.target.value);
-    };
+    // const onFormLoad = (id) => {
+    //   const response = userGet(id);
+    //   debugger;
+    // };
 
-    const lNameHandler = (event) => {
-        setLName(event.target.value);
-    };
-
-    const phoneHandler = (event) => {
-        setPhone(event.target.value);
-    };
-
-    const emailHandler = (event) => {
-        setEmail(event.target.value);
-    };
+    useEffect(() => {
+        onFormLoad(1); //Have to replace with id sent from login form
+    }, []);
 
     return (
-        <form>
-            <div>
-                <h2>User Details</h2>
-                <div>
-                    <label htmlFor="firstName">First Name:</label>
-                    <input
-                        type="text"
-                        name="firstName"
-                        id="firstName"
-                        defaultValue={props.firstName}
-                        onChange={fNameHandler}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="lastName">Last Name:</label>
-                    <input
-                        type="text"
-                        name="lastName"
-                        id="lastName"
-                        defaultValue={props.lastName}
-                        onChange={lNameHandler}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="phone">Phone Number:</label>
-                    <input
-                        type="text"
-                        name="phone"
-                        id="phone"
-                        default={props.phone}
-                        onChange={phoneHandler}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        default={props.email}
-                        onChange={emailHandler}
-                    />
-                </div>
-                <button onClick={updateHandler}>Submit</button>
-            </div>
-        </form>
+        <div>
+            <h1>User Profile</h1>
+            <form onSubmit={(event) => onFormSubmit(event)}>
+                <label>First Name</label>
+                <input
+                    type="text"
+                    value={userValues.FirstName}
+                    onChange={(event) =>
+                        setUserValues((obj) => ({
+                            ...obj,
+                            FirstName: event.target.value,
+                        }))
+                    }
+                />
+                <br />
+                <label>Last Name</label>
+                <input
+                    type="text"
+                    value={userValues.LastName}
+                    onChange={(event) =>
+                        setUserValues((obj) => ({
+                            ...obj,
+                            LastName: event.target.value,
+                        }))
+                    }
+                />
+                <br />
+                <label>Email</label>
+                <input
+                    type="text"
+                    value={userValues.Email}
+                    onChange={(event) =>
+                        setUserValues((obj) => ({
+                            ...obj,
+                            Email: event.target.value,
+                        }))
+                    }
+                />
+                <br />
+                <label>Phone Number</label>
+                <input
+                    type="text"
+                    value={userValues.PhoneNumber}
+                    onChange={(event) =>
+                        setUserValues((obj) => ({
+                            ...obj,
+                            PhoneNumber: event.target.value,
+                        }))
+                    }
+                />
+                <br />
+                <button onClick={(event) => onFormSubmit(event)}>Submit</button>
+            </form>
+        </div>
     );
 };
 
-export default UserProfile;
+export default connect(null, { userUpdate })(UserDisplay);
 
