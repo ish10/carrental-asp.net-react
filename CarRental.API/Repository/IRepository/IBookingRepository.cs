@@ -12,6 +12,7 @@ namespace CarRental.API.Repository.IRepository
     {
         List<CarSelectedObject> GetData(FormData formData);
         Task ApplyBooking_and_confrimation(CarSelectedObject chosenCar);
-
+        Object[] CheckPostValid(CarSelectedObject chosenCar);
     }
 }
+
