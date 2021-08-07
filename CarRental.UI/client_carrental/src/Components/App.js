@@ -8,6 +8,7 @@ import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
 import FeedBack from './FeedBack';
 import UserProfile from './UserProfile';
+import Booking from './Booking'
 const App=()=>{
 
     return(
@@ -22,6 +23,7 @@ const App=()=>{
            <Route path="/register" exact component={RegisterForm} />
            <Route path="/feedback" exact component={FeedBack} />
            <Route path="/userprofile/:id" exact component={UserProfile} />
+           <Route path="/booking" exact component={Booking} />
 
           
            </Switch>
