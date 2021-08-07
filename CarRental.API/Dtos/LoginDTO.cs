@@ -10,5 +10,6 @@ namespace CarRental.API.Dtos
 
         public string Email { get; set; }
         public string PasswordHash { get; set; }
+        public string UserType { get; set; }
     }
 }

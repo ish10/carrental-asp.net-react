@@ -36,13 +36,15 @@ namespace CarRental.API.Controllers
                 FirstName = registerDTO.FirstName.ToLower(),
                 LastName = registerDTO.LastName.ToLower(),
                Email = registerDTO.Email,
-                PhoneNumber = registerDTO.PhoneNumber
+                PhoneNumber = registerDTO.PhoneNumber,
+                UserType="User"
 
             };
             datacontext.Users.Add(Appuser);
            await datacontext.SaveChangesAsync();
             return new UserDTO { 
-            Username = registerDTO.FirstName + registerDTO.LastName,
+            Email = Appuser.Email,
+            UserType= Appuser.UserType,
             Token = "JBCJBVJKBVJABVJLADVBJLBVLAJKBVLKABKLABVBLKAKLVAKVL"
             };
         }
@@ -59,7 +61,8 @@ namespace CarRental.API.Controllers
 
             return new UserDTO
             {
-                Username = user.FirstName + user.LastName,
+                Email = user.Email,
+                UserType = user.UserType,
                 Token = "JBCJBVJKBVJABVJLADVBJLBVLAJKBVLKABKLABVBLKAKLVAKVL"
             };
         }
