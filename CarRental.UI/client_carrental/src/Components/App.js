@@ -21,7 +21,7 @@ const App=()=>{
            <Route path="/" exact component={LoginForm} />
            <Route path="/register" exact component={RegisterForm} />
            <Route path="/feedback" exact component={FeedBack} />
-           <Route path="/userprofile" exact component={UserProfile} />
+           <Route path="/userprofile/:id" exact component={UserProfile} />
 
           
            </Switch>

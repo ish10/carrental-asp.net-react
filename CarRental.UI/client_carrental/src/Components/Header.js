@@ -1,10 +1,12 @@
 import React from 'react';
 import History from '../history';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {logIn} from '../Actions'
 
 
 
-const Header=()=>{
+const Header=(props)=>{
 
     return(
 
@@ -12,10 +14,15 @@ const Header=()=>{
 <Link to='/'>Home</Link>
 <Link to='/'>Logout</Link>
 <Link to={`/feedback/${1}`}>Fedback</Link>
-<Link to='/userprofile'>userprofile</Link>    
+<Link to={`/userprofile/${props.email}`}>userprofile</Link>    
 
         </div>
     );
 }
+const mapStateToProps =(state)=>{
+    return{user:state.user,
+        email:state.auth.Email
+    }
+};
 
-export default Header;
+export default connect(mapStateToProps,{})(Header);

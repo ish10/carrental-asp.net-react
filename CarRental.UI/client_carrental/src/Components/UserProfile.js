@@ -13,6 +13,7 @@ const UserDisplay = (props) => {
         PhoneNumber: "",
     });
     useEffect(()=>{
+
         props.userGet(1); 
        
         console.log('hi');
@@ -138,7 +139,9 @@ else{
     );
 };
 const mapStateToProps =(state)=>{
-return{user:state.user}
+return{user:state.user,
+    email:state.auth.Email
+}
 };
 export default connect(mapStateToProps, { userUpdate,userGet  })(UserDisplay);
 
