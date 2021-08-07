@@ -10,8 +10,13 @@ switch(action.type){
 case  'SIGN_IN':
     return{...state,isSignedIn:true,Token:action.payload.token,Email:action.payload.email,UserType:action.payload.userType};
 case 'LOG_IN':    
-return{...state,isSignedIn:true,Token:action.payload.token,Email:action.payload.email,UserType:action.payload.userType};
- default:
+return{...state,isSignedIn:true,Token:action.payload.token,Email:action.payload.email,
+    UserType:action.payload.userType};
+case 'SIGN_OUT':
+    return{...state,isSignedIn:false,Token:null,Email:null,
+        UserType:null};
+
+default:
      return state;   
 
 
