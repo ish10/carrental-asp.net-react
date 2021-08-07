@@ -1,20 +1,21 @@
 ﻿const Initial_State = {
-    userId: null,
-    passwordHash: null,
-    firstName: null,
-    lastName: null,
-    phone: null,
-    email: null,
+    userId: "",
+    passwordHash: "",
+    firstName:"",
+    lastName: "",
+    phone: "",
+    email: "",
 };
 
 export default (state = Initial_State, action) => {
-    if (action.type === "UPDATE") {
+    if (action.type === "USER_GET") {
         return {
             ...state,
+            userId:action.payload.userId,
             passwordHash: action.payload.passwordHash,
             firstName: action.payload.firstName,
             lastName: action.payload.lastName,
-            phone: action.payload.phone,
+            phone: action.payload.phoneNumber,
             email: action.payload.email,
         };
     }

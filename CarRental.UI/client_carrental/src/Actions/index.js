@@ -7,11 +7,11 @@ export const userUpdate = (id, userValues) => {
     };
 };
 
-export const userGet = async (id) => {
+export const userGet =  (id) => {
     return async (dispatch, getState) => {
         const response = await Streams.get(`./api/User/${id}`);
         console.log(response.data);
-        dispatch({ type: "UPDATE", payload: response.data });
+        dispatch({ type: "USER_GET", payload: response.data });
     };
 };
 
