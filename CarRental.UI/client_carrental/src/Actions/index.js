@@ -1,4 +1,5 @@
 import Streams from "../api/Streams";
+import History from '../history'
 
 export const userUpdate = (id, userValues) => {
     return async (dispatch, getState) => {
@@ -24,6 +25,9 @@ export const logIn = (LoginDetails) => {
         );
         console.log(response.data);
         dispatch({ type: "LOG_IN", payload: response.data });
+       
+            History.push('/booking');
+        
     };
 };
 export const register = (FormValues) => {

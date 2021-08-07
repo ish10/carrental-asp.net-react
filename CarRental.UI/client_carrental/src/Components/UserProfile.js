@@ -13,7 +13,7 @@ const UserDisplay = (props) => {
         PhoneNumber: "",
     });
     useEffect(()=>{
-
+      // use email here i have fetched the value using props.email
         props.userGet(1); 
        
         console.log('hi');
