@@ -23,6 +23,7 @@ namespace CarRental.API.Model
         
         [Required]
         public string Email { get; set; }
+        public string UserType { get; set; }
 
 
         [DataType(DataType.PhoneNumber)]
