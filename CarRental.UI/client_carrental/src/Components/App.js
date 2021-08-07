@@ -7,6 +7,7 @@ import history from '../history';
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
 import FeedBack from './FeedBack';
+import UserProfile from './UserProfile';
 const App=()=>{
 
     return(
@@ -20,6 +21,8 @@ const App=()=>{
            <Route path="/" exact component={LoginForm} />
            <Route path="/register" exact component={RegisterForm} />
            <Route path="/feedback" exact component={FeedBack} />
+           <Route path="/userprofile" exact component={UserProfile} />
+
           
            </Switch>
          </div>
