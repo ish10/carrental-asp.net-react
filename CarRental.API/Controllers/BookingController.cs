@@ -23,9 +23,9 @@ namespace CarRental.API.Controllers
             this._bookingRepository = bookingRepository;
         }
 
+
         [Route("BookingReservation")]
         [HttpGet]
-
         public  ActionResult getFormData(string city, DateTime startDate, DateTime endDate, CarModel model) {
 
             var _Action = CheckData(startDate, endDate, city);
@@ -66,6 +66,25 @@ namespace CarRental.API.Controllers
                 return BadRequest("Start Date can't come after the End Date");
             }
             return Ok();
+        }
+
+        [Route("ConfrimTrip")]
+        [HttpPost]
+        public async Task<ActionResult> ApplyBooking_and_Confirm([FromBody] CarSelectedObject selected_car)
+        {
+            /*error To check and Test: {
+              "carId": 0,
+              "model": 0,
+              "modelValue": null,
+              "pricePerDay": 0,
+              "imge": null,
+              "numberPlate": null,
+              "startDate": "0001-01-01T00:00:00",
+              "endDate": "0001-01-01T00:00:00"
+            }*/
+
+            await _bookingRepository.ApplyBooking_and_confrimation(selected_car);
+            return Ok(selected_car); //accepted but no content to return back
         }
 
 

@@ -21,8 +21,6 @@ namespace CarRental.API.Repository
         {
             this.carRentalContext = carRentalContext;
         }
-
-
         public List<CarSelectedObject> GetData(FormData formdata)
         {
             var result = CarSet(formdata._cityName, formdata._startDate, formdata._endDate, formdata._Model);
@@ -42,14 +40,23 @@ namespace CarRental.API.Repository
            
             foreach (var c in cars)
             {
-                _result.Add(new CarSelectedObject(c.carId, c.model, Enum.GetName(typeof(CarModel), c.model), c.pricaPerDay, c.image, c.image));
+                _result.Add(new CarSelectedObject(c.carId, c.model, Enum.GetName(typeof(CarModel), c.model), c.pricaPerDay, c.image, c.plate, startDate, endDate));
             }
 
 
             return _result;
         }
+        public async Task ApplyBooking_and_confrimation(CarSelectedObject chosenCar)
+        {
+            int TotalAmount = getTotalAmount(chosenCar);
+        }
+        //calculate TotalAmount = totalDays * priceperDay 
+        private int getTotalAmount(CarSelectedObject chosenCar) {
+            int TotalDays = (int)(chosenCar.endDate.Date - chosenCar.startDate.Date).TotalDays; 
+            return (int)chosenCar.pricePerDay * TotalDays; //e.g 30 dollars/day * 3 days = 90 dollars.
+        }
 
-        
+
     }
 }
 

@@ -8,22 +8,26 @@ namespace CarRental.API.UtilitiesObjects
 {
     public class CarSelectedObject
     {
-        public int CarId { get; private set; }
-        public CarModel Model { get; private set; }
-        public string ModelValue { get; private set; }
-        public Double PricePerDay { get; private set; }
+        public int carId { get; private set; }
+        public CarModel model { get; private set; }
+        public string modelValue { get; private set; }
+        public Double pricePerDay { get; private set; }
 
-        public string Image { get; private set; }
-        public string NumberPlate { get; private set; }
+        public string image { get; private set; }
+        public string numberPlate { get; private set; }
+        public DateTime startDate { get; private set; }
+        public DateTime endDate { get; private set; }
 
-        public CarSelectedObject(int carID, CarModel model, string modelValue, Double price , string Image, string plate)
+        public CarSelectedObject(int carId, CarModel model, string modelValue, Double pricePerDay, string image, string numberPlate, DateTime startDate, DateTime endDate)
         {
-            this.CarId = carID;
-            this.Model = model;
-            this.ModelValue = modelValue;
-            this.PricePerDay = price;
-            this.Image = Image;
-            this.NumberPlate = plate;
+            this.carId = carId;
+            this.model = model;
+            this.modelValue = modelValue;
+            this.pricePerDay = pricePerDay;
+            this.image = image;
+            this.numberPlate = numberPlate;
+            this.startDate = startDate;
+            this.endDate = endDate;
                 
         }
     }
