@@ -11,6 +11,7 @@ namespace CarRental.API.Repository.IRepository
     public interface IBookingRepository
     {
         List<CarSelectedObject> GetData(FormData formData);
+        Task ApplyBooking_and_confrimation(CarSelectedObject chosenCar);
 
     }
 }
