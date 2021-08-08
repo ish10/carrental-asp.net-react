@@ -1,5 +1,6 @@
 ﻿using CarRental.API.Data;
 using CarRental.API.Dtos;
+using CarRental.API.interfaces;
 using CarRental.API.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,12 +19,13 @@ namespace CarRental.API.Controllers
     public class AccountController : ControllerBase
     {
         public readonly CarRentalDbContext datacontext;
+        private readonly ItokenService ItokenService;
 
-        public AccountController(CarRentalDbContext datacontext)
+        public AccountController(CarRentalDbContext datacontext, ItokenService ItokenService)
         {
            
             this.datacontext = datacontext;
-
+            this.ItokenService = ItokenService;
         }
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>> register(RegisterDTO registerDTO) {
@@ -45,7 +47,7 @@ namespace CarRental.API.Controllers
             return new UserDTO { 
             Email = Appuser.Email,
             UserType= Appuser.UserType,
-            Token = "JBCJBVJKBVJABVJLADVBJLBVLAJKBVLKABKLABVBLKAKLVAKVL"
+            Token = ItokenService.CreateToken(Appuser)
             };
         }
         [HttpPost("Login")]
@@ -63,7 +65,7 @@ namespace CarRental.API.Controllers
             {
                 Email = user.Email,
                 UserType = user.UserType,
-                Token = "JBCJBVJKBVJABVJLADVBJLBVLAJKBVLKABKLABVBLKAKLVAKVL"
+                Token = ItokenService.CreateToken(user)
             };
         }
     }

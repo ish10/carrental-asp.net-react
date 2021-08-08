@@ -8,11 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using CarRental.API.Data;
 using CarRental.API.Model;
 using CarRental.API.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
+using CarRental.API.Extensions;
 
 namespace CarRental.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -34,6 +37,8 @@ namespace CarRental.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
+            var username = User.GetUsername();
+            var userId = User.GetUserId();
             if (id < 0)
             {
                 return BadRequest("Id cannot be less than zero.");
@@ -52,6 +57,7 @@ namespace CarRental.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
+            var username = User.GetUsername();
             if (id != user.UserId || id < 0)
             {
                 return BadRequest("Id is not valid.");
