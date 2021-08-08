@@ -38,7 +38,7 @@ const Header=(props)=>{
     const classes = useStyles();
     const onLogout =()=>{
 props.signOut();
-
+History.push('/');
     };
     return(
         <div className={classes.root}>
@@ -49,9 +49,7 @@ props.signOut();
             <Typography variant="h6" className={classes.title}>
             <Link to='/'>Home</Link>
             </Typography>
-            <Typography variant="h6" className={classes.title}>
-            <Link to='/'>Logout</Link>
-            </Typography>
+           
             <Typography variant="h6" className={classes.title}>
             <Link to={`/feedback/${1}`}>Fedback</Link>
             </Typography>

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CarRental.API.interfaces
 {
-    interface ItokenService
+   public interface ItokenService
     {
-        string CreateToken(User user);
+       public string CreateToken(User user);
     }
 }

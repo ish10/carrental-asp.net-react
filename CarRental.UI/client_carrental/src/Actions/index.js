@@ -10,7 +10,12 @@ export const userUpdate = (id, userValues) => {
 
 export const userGet =  (id) => {
     return async (dispatch, getState) => {
-        const response = await Streams.get(`./api/User/${id}`);
+        const { Token } = getState().auth;
+        const response = await Streams.get(`./api/User/${id}`,{
+            headers:{
+                'Authorization': `Bearer ${Token}`
+            }
+        });
         console.log(response.data);
         dispatch({ type: "USER_GET", payload: response.data });
     };
