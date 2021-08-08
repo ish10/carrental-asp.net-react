@@ -26,6 +26,7 @@ namespace CarRental.API.Controllers
         }
 
 
+        //Takes Form data to search the car list 
         [Route("BookingReservation")]
         [HttpGet]
         public ActionResult getFormData(string city, DateTime startDate, DateTime endDate, CarModel model)
@@ -37,17 +38,32 @@ namespace CarRental.API.Controllers
             {
 
                 List<CarSelectedObject> carSelected = _bookingRepository.GetData(bookingFormData);
-                if (carSelected.Count == 0) return NoContent();
+                if (carSelected == null) return StatusCode(500); // Can't connect to the db
+                if (carSelected.Count == 0) return NoContent(); // accepted but either the city is not found in db or the model for the choosen city is not found.
                 return Ok(carSelected);
             }
             return _Action;
         }
 
-        [Route("ConfrimTrip")]
+
+        //Takes the chosen car from the user tyo confirm trip reseravation  
+        [Route("ConfirmTrip")]
         [HttpPost]
         public async Task<ActionResult> ApplyBooking_and_Confirm([FromBody] CarSelectedObject selected_car)
         {
-            /*error To check and Test: {
+            ActionResult statusCode = checkPostData(selected_car);
+            if (statusCode.GetType() == typeof(NoContentResult))
+            {
+                await _bookingRepository.ApplyBooking_and_confrimation(selected_car);
+                return NoContent(); //accepted but no content to return back
+            }
+            return statusCode;
+        }
+
+
+
+        /*Behaviors for test and error cases handling, such as 
+         * {
               "carId": 0,
               "model": 0,
               "modelValue": null,
@@ -56,34 +72,25 @@ namespace CarRental.API.Controllers
               "numberPlate": null,
               "startDate": "0001-01-01T00:00:00",
               "endDate": "0001-01-01T00:00:00"
-            }*/
-            ActionResult statusCode = checkPostData(selected_car);
-            if (statusCode.GetType() == typeof(OkResult))
-            {
-                await _bookingRepository.ApplyBooking_and_confrimation(selected_car);
-                return Ok(statusCode + " " + selected_car); //accepted but no content to return back
             }
-            return statusCode;
-        }
-
+         */
         private ActionResult checkPostData(CarSelectedObject chosenObject)
         {
             // check startDate and endDate in case the client didn't send it
             var statusCode = CheckData(new FormData("None", chosenObject.startDate, chosenObject.endDate, chosenObject.model));
             if (statusCode.GetType() == typeof(BadRequestObjectResult))
-            {
                 return BadRequest("Dates is requried and can't be in the past");
-            }
 
             // check that the data send by client is valid by comparing them in db
             var queryCheck = _bookingRepository.CheckPostValid(chosenObject);
+            if (queryCheck == null)
+                return StatusCode(500);
             if (queryCheck.Length == 0)
-            {
                 return BadRequest("Car information is correct, check your data values");
-            }
+            
 
             //var jsonStringnew = JsonConvert.SerializeObject(chosenObject).Length;
-            return Ok();
+            return NoContent();
         }
         private ActionResult CheckData(FormData form_data)
         {
