@@ -10,5 +10,6 @@ namespace CarRental.API.Repository.IRepository
         ICarRepository Car { get; }
         ILocationRepository Location { get; }
         ISP_Call SP_Call { get; }
+        IReviewRepository Review { get; }
     }
 }
