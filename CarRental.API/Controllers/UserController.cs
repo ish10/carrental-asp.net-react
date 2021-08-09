@@ -34,16 +34,16 @@ namespace CarRental.API.Controllers
         }
 
         // GET: api/User/5
-        [HttpGet("{email}")]
-        public async Task<ActionResult<User>> GetUser(string email)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetUser(int id)
         {
             var username = User.GetUsername();
             var userId = User.GetUserId();
-            if (!email.Contains("@") || !email.Contains("."))
+            if (id < 0)
             {
-                return BadRequest("Enter Valid Email Id.");
+                return BadRequest("Id cannot be less than zero.");
             }
-            User userRecord = await _userRepository.GetFirstOrDefaultAsync(u => u.Email == email);
+            User userRecord = await _userRepository.GetFirstOrDefaultAsync(u => u.UserId == id);
 
             if (userRecord == null)
             {
@@ -54,17 +54,16 @@ namespace CarRental.API.Controllers
         }
 
         //PUT: api/User/5
-        [HttpPut("{email}")]
-        public async Task<IActionResult> PutUser(string email, User user)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutUser(int id, User user)
         {
             var username = User.GetUsername();
-            if (email != user.Email || !email.Contains("@"))
+            if (id != user.UserId || id < 0)
             {
-                return BadRequest("Email Id is not valid.");
+                return BadRequest("Id is not valid.");
             }
 
             _userRepository.UpdateUser(user);
-            int id = user.UserId;
 
             try
             {
