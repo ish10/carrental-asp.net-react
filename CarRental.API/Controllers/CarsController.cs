@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CarRental.API.Data;
 using CarRental.API.Model;
 using CarRental.API.Repository.IRepository;
+using System.Net.Http;
 
 namespace CarRental.API.Controllers
 {
@@ -24,10 +25,10 @@ namespace CarRental.API.Controllers
 
         // GET: api/Cars
         [HttpGet]
-        public async Task<IActionResult> GetCars()
+        public async Task<IEnumerable<Car>> GetCars()
         {
             IEnumerable<Car> carsList = await _unitOfWork.Car.GetAllAsync(null, null, nameof(Location));
-            return new JsonResult(carsList);
+            return carsList;
         }
 
         // GET: api/Cars/5
@@ -75,7 +76,7 @@ namespace CarRental.API.Controllers
                     throw;
                 }
             }
-
+            var test = await GetCar(id);
             return NoContent();
         }
 
@@ -83,20 +84,32 @@ namespace CarRental.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Car>> PostCar(Car car)
         {
+            car.CarId = 0;
             if (!ModelState.IsValid)
             {
                 return BadRequest("Invalid data");
             }
-            if (car.CarId < 0 || car.LocationId <= 0)
+            if (car.CarId < 0 || car.LocationId < 0)
             {
-                return BadRequest("CarId should not be less than 0 and location Id Should not be less than 1");
+                return BadRequest("CarId should not be less than 0 and location Id Should not be less than 0");
             }
 
-            Location location = await _unitOfWork.Location.GetAsync(car.LocationId);
+            Location location = await _unitOfWork.Location.GetFirstOrDefaultAsync(l => l.City == car.Location.City && l.Province == car.Location.Province);
+            //Location location = await _unitOfWork.Location.GetAsync(car.LocationId);
 
-            if (location == null)
+            if (location != null)
             {
-                return BadRequest("Location does not exist. Please make sure to add the location");
+
+                //await _unitOfWork.Location.AddAsync(car.Location);
+                //await _unitOfWork.Location.Save();
+                //Location locationInserted = await _unitOfWork.Location.GetFirstOrDefaultAsync(l => l.City == car.Location.City && l.Province == car.Location.Province);
+                //car.LocationId = locationInserted.LocationId;
+                //car.Location.LocationId = locationInserted.LocationId;
+                //car.Location.Province = locationInserted.Province;
+                //car.Location.City = locationInserted.City;
+
+                car.LocationId = location.LocationId;
+                car.Location = null;
             }
 
             await _unitOfWork.Car.AddAsync(car);

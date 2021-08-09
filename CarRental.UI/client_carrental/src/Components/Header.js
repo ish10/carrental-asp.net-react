@@ -54,7 +54,9 @@ if(props.signedin){
 return(      <div className="dropdown">
 <button onClick={()=>myFunction()} className="dropbtn">   {username()}      </button>
 <div  className={(menu===true)?"dropdown-content show":"dropdown-content"}>
-  <Link to={`/feedback/${1}`}>Fedback</Link>
+  <Link to={`/feedback/${1}`}>Feedback</Link>
+  <Link to={`/carList`}>Car List</Link>
+  <Link to={`/addCar`}>Add Car</Link>
   <Link onClick={()=>myFunction()}to={`/userprofile/${props.email}`}>userprofile</Link> 
   <button onClick={()=>onLogout()}>Logout</button>
   
@@ -87,7 +89,7 @@ History.push('/');
             </Typography>
            
             <Typography variant="h6" className={classes.title}>
-            <Link to={`/feedback/${1}`}>Fedback</Link>
+            <Link to={`/feedback/${1}`}>Feedback</Link>
             </Typography>
             
       {menuitem()}
