@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { logIn } from '../Actions';
+import '../CSS/form.css'
 
 
 const LoginForm=(props)=>{
