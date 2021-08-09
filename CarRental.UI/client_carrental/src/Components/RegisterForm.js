@@ -1,7 +1,8 @@
 
 import React,{useState} from 'react';
 import {connect} from 'react-redux';
-import{register} from '../Actions'
+import{register} from '../Actions';
+import '../CSS/form.css';
 
 
 

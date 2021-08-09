@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux';
 import authReducer from './authReducer';
 import userReducer from './userReducer';
+import carReducer from './carReducer';
 
 const appReducer= combineReducers({
     auth: authReducer,
-    user: userReducer
+    user: userReducer,
+    cars: carReducer
     });
 
     const rootReducer = (state, action) => {

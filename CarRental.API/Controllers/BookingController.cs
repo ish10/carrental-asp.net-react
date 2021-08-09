@@ -19,6 +19,7 @@ namespace CarRental.API.Controllers
     public class BookingController : ControllerBase
     {
         private readonly IBookingRepository _bookingRepository;
+       
 
         public BookingController(IBookingRepository bookingRepository)
         {
@@ -51,11 +52,12 @@ namespace CarRental.API.Controllers
         [HttpPost]
         public async Task<ActionResult> ApplyBooking_and_Confirm([FromBody] CarSelectedObject selected_car)
         {
+            //check the Json data
             ActionResult statusCode = checkPostData(selected_car);
             if (statusCode.GetType() == typeof(NoContentResult))
             {
-                await _bookingRepository.ApplyBooking_and_confrimation(selected_car);
-                return NoContent(); //accepted but no content to return back
+                var trip_result = await _bookingRepository.ApplyBooking_and_confrimation(selected_car);
+                return Ok(trip_result); //accepted but no content to return back
             }
             return statusCode;
         }
@@ -74,19 +76,32 @@ namespace CarRental.API.Controllers
               "endDate": "0001-01-01T00:00:00"
             }
          */
+        
         private ActionResult checkPostData(CarSelectedObject chosenObject)
         {
+            // check UserID
+            var userId_Check= _bookingRepository.CheckUserValid(chosenObject);
+
+            //JSON data is not correct
+            if (userId_Check.ToString().Length == 0)
+                return BadRequest("User id not found or not correct");
+            //can not connect to db 
+            if (userId_Check == null)
+                return StatusCode(500);
+
             // check startDate and endDate in case the client didn't send it
             var statusCode = CheckData(new FormData("None", chosenObject.startDate, chosenObject.endDate, chosenObject.model));
             if (statusCode.GetType() == typeof(BadRequestObjectResult))
                 return BadRequest("Dates is requried and can't be in the past");
 
             // check that the data send by client is valid by comparing them in db
-            var queryCheck = _bookingRepository.CheckPostValid(chosenObject);
+            var queryCheck = _bookingRepository.CheckPostCarValid(chosenObject);
+            //can not connect to db 
             if (queryCheck == null)
                 return StatusCode(500);
+            //JSON data is not correct
             if (queryCheck.Length == 0)
-                return BadRequest("Car information is correct, check your data values");
+                return BadRequest("Car information is not correct, check your data values");
             
 
             //var jsonStringnew = JsonConvert.SerializeObject(chosenObject).Length;
@@ -120,6 +135,5 @@ namespace CarRental.API.Controllers
             }
             return Ok();
         }
-
     }
 }
