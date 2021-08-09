@@ -16,11 +16,14 @@ namespace CarRental.API.Repository
             Car = new CarRepository(_db);
             Location = new LocationRepository(_db);
             SP_Call = new SP_Call(_db);
+            Review = new ReviewRepository(_db);
         }
 
         public ICarRepository Car { get; private set; }
         public ILocationRepository Location { get; private set; }
         public ISP_Call SP_Call { get; private set; }
+        public IReviewRepository Review { get; private set; }
+
 
         public void Dispose()
         {
